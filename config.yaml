@@ -34,3 +34,8 @@ networks:
         address:
           - 0xAD2416AF4F7D9DD65F94B52988e7234fFA6757B4
 rollback_on_reorg: false
+
+field_selection:
+  transaction_fields:
+    - "hash"
+    - "transactionIndex"
