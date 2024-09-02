@@ -1,0 +1,125 @@
+type CollatorStakingHub_AddCollator {
+  id: ID!
+  cur: String!
+  votes: BigInt!
+  prev: String!
+
+  blockNumber: BigInt!
+  logIndex: Int!
+  blockTimestamp: BigInt!
+}
+
+type CollatorStakingHub_CommissionUpdated {
+  id: ID!
+  collator: String!
+  commission: BigInt!
+
+  blockNumber: BigInt!
+  logIndex: Int!
+  blockTimestamp: BigInt!
+}
+
+type CollatorStakingHub_Initialized {
+  id: ID!
+  version: BigInt!
+
+  blockNumber: BigInt!
+  logIndex: Int!
+  blockTimestamp: BigInt!
+}
+
+type CollatorStakingHub_NominationPoolCreated {
+  id: ID!
+  pool: String!
+  collator: String!
+  prev: String
+  seq: Int!
+
+  blockNumber: BigInt!
+  logIndex: Int!
+  blockTimestamp: BigInt!
+}
+
+type CollatorStakingHub_RemoveCollator {
+  id: ID!
+  cur: String!
+  prev: String!
+
+  blockNumber: BigInt!
+  logIndex: Int!
+  blockTimestamp: BigInt!
+}
+
+type CollatorStakingHub_Staked {
+  id: ID!
+  pool: String!
+  collator: String!
+  account: String!
+  assets: BigInt!
+
+  blockNumber: BigInt!
+  logIndex: Int!
+  blockTimestamp: BigInt!
+}
+
+type CollatorStakingHub_Unstaked {
+  id: ID!
+  pool: String!
+  collator: String!
+  account: String!
+  assets: BigInt!
+
+  blockNumber: BigInt!
+  logIndex: Int!
+  blockTimestamp: BigInt!
+}
+
+type CollatorStakingHub_UpdateCollator {
+  id: ID!
+  cur: String!
+  votes: BigInt!
+  oldPrev: String!
+  newPrev: String!
+
+  blockNumber: BigInt!
+  logIndex: Int!
+  blockTimestamp: BigInt!
+}
+
+###### ==== custom
+
+type CollatorSet {
+  id: ID!
+  address: String!
+  seq: Int!
+  votes: BigInt!
+
+  blockNumber: BigInt!
+  logIndex: Int!
+  blockTimestamp: BigInt!
+}
+
+type StakingAccount {
+  id: ID!
+  pool: String!
+  collator: String!
+  account: String!
+
+  assets: BigInt!
+}
+
+type StakingCollator {
+  id: ID!
+  pool: String!
+  collator: String!
+
+  assets: BigInt!
+}
+
+type StakingNomination {
+  id: ID!
+  pool: String!
+
+  assets: BigInt!
+}
+

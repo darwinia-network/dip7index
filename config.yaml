@@ -1,0 +1,36 @@
+# yaml-language-server: $schema=./node_modules/envio/evm.schema.json
+name: collator_hub
+contracts:
+  - name: CollatorStakingHub
+    handler: src/EventHandlers.ts
+    events:
+      - event: AddCollator(address indexed cur, uint256 votes, address prev)
+      - event: CommissionUpdated(address indexed collator, uint256 commission)
+      - event: Initialized(uint64 version)
+      - event: NominationPoolCreated(address indexed pool, address collator)
+      - event: RemoveCollator(address indexed cur, address prev)
+      - event: Staked(address indexed pool, address collator, address account, uint256 assets)
+      - event: Unstaked(address indexed pool, address collator, address account, uint256 assets)
+      - event: UpdateCollator(address indexed cur, uint256 votes, address oldPrev, address newPrev)
+networks:
+  - id: 44
+    start_block: 0
+    contracts:
+      - name: CollatorStakingHub
+        address:
+          - 0xAD2416AF4F7D9DD65F94B52988e7234fFA6757B4
+  - id: 46
+    start_block: 0
+    contracts:
+      - name: CollatorStakingHub
+        address:
+          - 0xAD2416AF4F7D9DD65F94B52988e7234fFA6757B4
+  - id: 701
+    rpc_config:
+      url: https://koi-rpc.darwinia.network
+    start_block: 925175
+    contracts:
+      - name: CollatorStakingHub
+        address:
+          - 0xAD2416AF4F7D9DD65F94B52988e7234fFA6757B4
+rollback_on_reorg: false
