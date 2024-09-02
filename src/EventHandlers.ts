@@ -22,8 +22,8 @@ import {
 // # ===== collators
 
 CollatorStakingHub.AddCollator.handler(async ({event, context}) => {
-  const cur: string = String(event.params.cur);
-  const prev: string = String(event.params.prev);
+  const cur = event.params.cur;
+  const prev = event.params.prev;
   const votes = event.params.votes;
   const entity: CollatorStakingHub_AddCollator = {
     id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
@@ -51,12 +51,11 @@ CollatorStakingHub.AddCollator.handler(async ({event, context}) => {
 
 
 CollatorStakingHub.RemoveCollator.handler(async ({event, context}) => {
-  const cur: string = String(event.params.cur);
-  const prev: string = String(event.params.prev);
+  const cur = event.params.cur;
   const entity: CollatorStakingHub_RemoveCollator = {
     id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
     cur,
-    prev,
+    prev: event.params.prev,
     blockNumber: BigInt(event.block.number),
     logIndex: event.logIndex,
     blockTimestamp: BigInt(event.block.timestamp),
@@ -68,9 +67,9 @@ CollatorStakingHub.RemoveCollator.handler(async ({event, context}) => {
 
 
 CollatorStakingHub.UpdateCollator.handler(async ({event, context}) => {
-  const cur: string = String(event.params.cur);
-  const oldPrev: string = String(event.params.oldPrev);
-  const newPrev: string = String(event.params.newPrev);
+  const cur = event.params.cur;
+  const oldPrev = event.params.oldPrev;
+  const newPrev = event.params.newPrev;
   const votes = event.params.votes;
   const entity: CollatorStakingHub_UpdateCollator = {
     id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
@@ -105,10 +104,9 @@ CollatorStakingHub.UpdateCollator.handler(async ({event, context}) => {
 
 
 CollatorStakingHub.CommissionUpdated.handler(async ({event, context}) => {
-  const collator = String(event.params.collator);
   const entity: CollatorStakingHub_CommissionUpdated = {
     id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
-    collator,
+    collator: event.params.collator,
     commission: event.params.commission,
     blockNumber: BigInt(event.block.number),
     logIndex: event.logIndex,
@@ -139,8 +137,8 @@ CollatorStakingHub.NominationPoolCreated.handler(async ({event, context}) => {
     seq = (prevPool?.seq ?? 0) + 1
   }
 
-  const pool = String(event.params.pool);
-  const collator = String(event.params.collator);
+  const pool = event.params.pool;
+  const collator = event.params.collator;
 
   const entity: CollatorStakingHub_NominationPoolCreated = {
     id: pool,
@@ -157,9 +155,9 @@ CollatorStakingHub.NominationPoolCreated.handler(async ({event, context}) => {
 });
 
 CollatorStakingHub.Staked.handler(async ({event, context}) => {
-  const pool = String(event.params.pool);
-  const collator = String(event.params.collator);
-  const account = String(event.params.account);
+  const pool = event.params.pool;
+  const collator = event.params.collator;
+  const account = event.params.account;
   const assets = event.params.assets;
 
   const entity: CollatorStakingHub_Staked = {
@@ -204,9 +202,9 @@ CollatorStakingHub.Staked.handler(async ({event, context}) => {
 });
 
 CollatorStakingHub.Unstaked.handler(async ({event, context}) => {
-  const pool = String(event.params.pool);
-  const collator = String(event.params.collator);
-  const account = String(event.params.account);
+  const pool = event.params.pool;
+  const collator = event.params.collator;
+  const account = event.params.account;
   const assets = event.params.assets;
 
   const entity: CollatorStakingHub_Unstaked = {
