@@ -118,7 +118,6 @@ CollatorStakingHub.CommissionUpdated.handler(async ({event, context}) => {
   context.CollatorStakingHub_CommissionUpdated.set(entity);
 });
 
-
 CollatorStakingHub.Initialized.handler(async ({event, context}) => {
   const entity: CollatorStakingHub_Initialized = {
     id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
@@ -130,7 +129,6 @@ CollatorStakingHub.Initialized.handler(async ({event, context}) => {
 
   context.CollatorStakingHub_Initialized.set(entity);
 });
-
 
 CollatorStakingHub.NominationPoolCreated.handler(async ({event, context}) => {
   // const prev = event.params['prev'] ? String(event.params['prev']) : undefined;
