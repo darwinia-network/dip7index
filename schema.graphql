@@ -101,6 +101,12 @@ type CollatorSet {
   seq: Int!
   votes: BigInt!
 
+  pool: String
+  commission: BigInt
+  assets: BigInt
+
+  inactive: Int!
+
   chainId: BigInt!
   blockNumber: BigInt!
   logIndex: Int!
@@ -116,21 +122,3 @@ type StakingAccount {
   assets: BigInt!
   chainId: BigInt!
 }
-
-type StakingCollator {
-  id: ID!
-  pool: String!
-  collator: String!
-
-  assets: BigInt!
-  chainId: BigInt!
-}
-
-type StakingNomination {
-  id: ID!
-  pool: String!
-
-  assets: BigInt!
-  chainId: BigInt!
-}
-

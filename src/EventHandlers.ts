@@ -14,8 +14,6 @@ import {
   CollatorStakingHub_Unstaked,
   CollatorStakingHub_UpdateCollator,
   StakingAccount,
-  StakingCollator,
-  StakingNomination,
 } from "generated";
 
 
@@ -45,6 +43,12 @@ CollatorStakingHub.AddCollator.handler(async ({event, context}) => {
     prev,
     seq: prevCollator ? (prevCollator.seq + 1) : 0,
     votes: votes,
+
+    pool: undefined,
+    commission: undefined,
+    assets: undefined,
+    inactive: 0,
+
     chainId,
     blockNumber: BigInt(event.block.number),
     logIndex: event.logIndex,
@@ -68,7 +72,10 @@ CollatorStakingHub.RemoveCollator.handler(async ({event, context}) => {
   };
   context.CollatorStakingHub_RemoveCollator.set(entity);
 
-  context.CollatorSet.deleteUnsafe(cur);
+  const storedCollator = await context.CollatorSet.get(cur);
+  if (storedCollator) {
+    context.CollatorSet.set({...storedCollator, inactive: 1});
+  }
 });
 
 
@@ -91,16 +98,14 @@ CollatorStakingHub.UpdateCollator.handler(async ({event, context}) => {
   };
   context.CollatorStakingHub_UpdateCollator.set(entity);
 
-  // const oldPrevCollator = await context.CollatorSet.get(oldPrev);
+  const storedCollator = await context.CollatorSet.get(cur);
   const newPrevCollator = await context.CollatorSet.get(newPrev);
-  if (newPrevCollator) {
+  if (storedCollator && newPrevCollator) {
     const curCollator: CollatorSet = {
-      id: cur,
-      address: cur,
+      ...storedCollator,
       seq: newPrevCollator.seq + 1,
-      votes: votes,
+      votes,
       prev: newPrev,
-      chainId,
       blockNumber: BigInt(event.block.number),
       logIndex: event.logIndex,
       blockTimestamp: BigInt(event.block.timestamp),
@@ -115,17 +120,24 @@ CollatorStakingHub.UpdateCollator.handler(async ({event, context}) => {
 
 CollatorStakingHub.CommissionUpdated.handler(async ({event, context}) => {
   const chainId = BigInt(event.chainId);
+  const collator = event.params.collator;
+  const commission = event.params.commission;
   const entity: CollatorStakingHub_CommissionUpdated = {
     id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
-    collator: event.params.collator,
-    commission: event.params.commission,
+    collator,
+    commission,
     chainId,
     blockNumber: BigInt(event.block.number),
     logIndex: event.logIndex,
     blockTimestamp: BigInt(event.block.timestamp),
   };
-
   context.CollatorStakingHub_CommissionUpdated.set(entity);
+
+  const storedCollator = await context.CollatorSet.get(collator);
+  if (storedCollator) {
+    const c = {...storedCollator, commission};
+    context.CollatorSet.set(c);
+  }
 });
 
 CollatorStakingHub.Initialized.handler(async ({event, context}) => {
@@ -144,7 +156,6 @@ CollatorStakingHub.Initialized.handler(async ({event, context}) => {
 
 CollatorStakingHub.NominationPoolCreated.handler(async ({event, context}) => {
   const chainId = BigInt(event.chainId);
-
   const pool = event.params.pool;
   const collator = event.params.collator;
 
@@ -157,8 +168,14 @@ CollatorStakingHub.NominationPoolCreated.handler(async ({event, context}) => {
     logIndex: event.logIndex,
     blockTimestamp: BigInt(event.block.timestamp),
   };
-
   context.CollatorStakingHub_NominationPoolCreated.set(entity);
+
+
+  const storedCollator = await context.CollatorSet.get(collator);
+  if (storedCollator) {
+    const c = {...storedCollator, pool};
+    context.CollatorSet.set(c);
+  }
 });
 
 CollatorStakingHub.Staked.handler(async ({event, context}) => {
@@ -181,36 +198,26 @@ CollatorStakingHub.Staked.handler(async ({event, context}) => {
   };
   context.CollatorStakingHub_Staked.set(entity);
 
-  const _stakingAccountId = `${pool}_${collator}_${account}`;
-  const _stakingCollatorId = `${pool}_${collator}`;
-  const _stakingNominationId = pool;
-  const storedStakingAccount = await context.StakingAccount.get(_stakingCollatorId);
-  const storedStakingCollator = await context.StakingCollator.get(_stakingCollatorId);
-  const storedStakingNomination = await context.StakingNomination.get(_stakingNominationId);
-  const stakingAccount: StakingAccount = {
+  // staking account
+  const _stakingAccountId = `${collator}_${account}`;
+  const storedStakingAccount = await context.StakingAccount.get(_stakingAccountId);
+  context.StakingAccount.set({
     id: _stakingAccountId,
     pool,
     collator,
     account,
     assets: (storedStakingAccount?.assets ?? 0n) + assets,
     chainId,
-  };
-  const stakingCollator: StakingCollator = {
-    id: _stakingCollatorId,
-    pool,
-    collator,
-    assets: (storedStakingCollator?.assets ?? 0n) + assets,
-    chainId,
-  };
-  const stakingNomination: StakingNomination = {
-    id: _stakingNominationId,
-    pool,
-    assets: (storedStakingNomination?.assets ?? 0n) + assets,
-    chainId,
-  };
-  context.StakingAccount.set(stakingAccount);
-  context.StakingCollator.set(stakingCollator);
-  context.StakingNomination.set(stakingNomination);
+  });
+
+  // staking collator
+  const storedCollator = await context.CollatorSet.get(collator);
+  if (storedCollator) {
+    context.CollatorSet.set({
+      ...storedCollator,
+      assets: (storedCollator.assets ?? 0n) + assets,
+    });
+  }
 });
 
 CollatorStakingHub.Unstaked.handler(async ({event, context}) => {
@@ -233,13 +240,9 @@ CollatorStakingHub.Unstaked.handler(async ({event, context}) => {
   };
   context.CollatorStakingHub_Unstaked.set(entity);
 
-
+  // staking account
   const _stakingAccountId = `${pool}_${collator}_${account}`;
-  const _stakingCollatorId = `${pool}_${collator}`;
-  const _stakingNominationId = pool;
-  const storedStakingAccount = await context.StakingAccount.get(_stakingCollatorId);
-  const storedStakingCollator = await context.StakingCollator.get(_stakingCollatorId);
-  const storedStakingNomination = await context.StakingNomination.get(_stakingNominationId);
+  const storedStakingAccount = await context.StakingAccount.get(_stakingAccountId);
   if (storedStakingAccount) {
     const stakingAccount: StakingAccount = {
       id: _stakingAccountId,
@@ -251,23 +254,13 @@ CollatorStakingHub.Unstaked.handler(async ({event, context}) => {
     };
     context.StakingAccount.set(stakingAccount);
   }
-  if (storedStakingCollator) {
-    const stakingCollator: StakingCollator = {
-      id: _stakingCollatorId,
-      pool,
-      collator,
-      assets: storedStakingCollator.assets - assets,
-      chainId,
-    };
-    context.StakingCollator.set(stakingCollator);
-  }
-  if (storedStakingNomination) {
-    const stakingNomination: StakingNomination = {
-      id: _stakingNominationId,
-      pool,
-      assets: storedStakingNomination.assets - assets,
-      chainId,
-    };
-    context.StakingNomination.set(stakingNomination);
+
+  // staking collator
+  const storedCollator = await context.CollatorSet.get(collator);
+  if (storedCollator) {
+    context.CollatorSet.set({
+      ...storedCollator,
+      assets: (storedCollator?.assets ?? 0n) - assets,
+    });
   }
 });
