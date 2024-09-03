@@ -46,7 +46,7 @@ CollatorStakingHub.AddCollator.handler(async ({event, context}) => {
     prev,
     seq: prevCollator ? ((prevCollator.seq ?? 0) + 1) : 0,
     votes,
-    inset: 0,
+    inset: 1,
     chainId,
     blockNumber,
     logIndex,
@@ -62,7 +62,7 @@ CollatorStakingHub.AddCollator.handler(async ({event, context}) => {
 
       pool: undefined,
       commission: undefined,
-      assets: undefined,
+      assets: 0n,
     };
     context.CollatorSet.set(newCollator);
   }
@@ -85,7 +85,13 @@ CollatorStakingHub.RemoveCollator.handler(async ({event, context}) => {
 
   const storedCollator = await context.CollatorSet.get(cur);
   if (storedCollator) {
-    context.CollatorSet.set({...storedCollator, inset: 1});
+    context.CollatorSet.set({
+      ...storedCollator,
+      inset: 0,
+      votes: undefined,
+      prev: undefined,
+      seq: undefined,
+    });
   }
 });
 
@@ -160,8 +166,8 @@ CollatorStakingHub.CommissionUpdated.handler(async ({event, context}) => {
       votes: undefined,
       pool: undefined,
       commission,
-      assets: undefined,
-      inset: undefined,
+      assets: 0n,
+      inset: 1,
       chainId,
       blockNumber,
       logIndex,
@@ -215,8 +221,8 @@ CollatorStakingHub.NominationPoolCreated.handler(async ({event, context}) => {
       votes: undefined,
       pool,
       commission: undefined,
-      assets: undefined,
-      inset: undefined,
+      assets: 0n,
+      inset: 1,
       chainId,
       blockNumber,
       logIndex,

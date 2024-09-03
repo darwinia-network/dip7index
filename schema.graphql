@@ -96,7 +96,7 @@ type CollatorStakingHub_UpdateCollator {
 
 type CollatorSet {
   id: ID!
-  address: String
+  address: String!
   prev: String
   seq: Int
   votes: BigInt
