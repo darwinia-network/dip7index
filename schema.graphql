@@ -96,16 +96,16 @@ type CollatorStakingHub_UpdateCollator {
 
 type CollatorSet {
   id: ID!
-  address: String!
-  prev: String!
-  seq: Int!
-  votes: BigInt!
+  address: String
+  prev: String
+  seq: Int
+  votes: BigInt
 
   pool: String
   commission: BigInt
   assets: BigInt
 
-  inactive: Int!
+  inset: Int
 
   chainId: BigInt!
   blockNumber: BigInt!

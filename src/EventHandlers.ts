@@ -24,37 +24,48 @@ CollatorStakingHub.AddCollator.handler(async ({event, context}) => {
   const cur = event.params.cur;
   const prev = event.params.prev;
   const votes = event.params.votes;
+  const blockNumber = BigInt(event.block.number);
+  const logIndex = event.logIndex;
+  const blockTimestamp = BigInt(event.block.timestamp);
+
   const entity: CollatorStakingHub_AddCollator = {
     id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
     cur,
     votes,
     prev,
     chainId,
-    blockNumber: BigInt(event.block.number),
-    logIndex: event.logIndex,
-    blockTimestamp: BigInt(event.block.timestamp),
+    blockNumber,
+    logIndex,
+    blockTimestamp,
   };
   context.CollatorStakingHub_AddCollator.set(entity);
 
+  const storedCollator = await context.CollatorSet.get(cur);
   const prevCollator = await context.CollatorSet.get(prev);
-  const newCollator: CollatorSet = {
-    id: cur,
-    address: cur,
+  const baseCollator = {
     prev,
-    seq: prevCollator ? (prevCollator.seq + 1) : 0,
-    votes: votes,
-
-    pool: undefined,
-    commission: undefined,
-    assets: undefined,
-    inactive: 0,
-
+    seq: prevCollator ? ((prevCollator.seq ?? 0) + 1) : 0,
+    votes,
+    inset: 0,
     chainId,
-    blockNumber: BigInt(event.block.number),
-    logIndex: event.logIndex,
-    blockTimestamp: BigInt(event.block.timestamp),
+    blockNumber,
+    logIndex,
+    blockTimestamp,
   };
-  context.CollatorSet.set(newCollator);
+  if (storedCollator) {
+    context.CollatorSet.set({...storedCollator, ...baseCollator});
+  } else {
+    const newCollator: CollatorSet = {
+      ...baseCollator,
+      id: cur,
+      address: cur,
+
+      pool: undefined,
+      commission: undefined,
+      assets: undefined,
+    };
+    context.CollatorSet.set(newCollator);
+  }
 });
 
 
@@ -74,7 +85,7 @@ CollatorStakingHub.RemoveCollator.handler(async ({event, context}) => {
 
   const storedCollator = await context.CollatorSet.get(cur);
   if (storedCollator) {
-    context.CollatorSet.set({...storedCollator, inactive: 1});
+    context.CollatorSet.set({...storedCollator, inset: 1});
   }
 });
 
@@ -103,7 +114,7 @@ CollatorStakingHub.UpdateCollator.handler(async ({event, context}) => {
   if (storedCollator && newPrevCollator) {
     const curCollator: CollatorSet = {
       ...storedCollator,
-      seq: newPrevCollator.seq + 1,
+      seq: (newPrevCollator.seq ?? 0) + 1,
       votes,
       prev: newPrev,
       blockNumber: BigInt(event.block.number),
@@ -122,21 +133,40 @@ CollatorStakingHub.CommissionUpdated.handler(async ({event, context}) => {
   const chainId = BigInt(event.chainId);
   const collator = event.params.collator;
   const commission = event.params.commission;
+  const blockNumber = BigInt(event.block.number);
+  const logIndex = event.logIndex;
+  const blockTimestamp = BigInt(event.block.timestamp);
+
   const entity: CollatorStakingHub_CommissionUpdated = {
     id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
     collator,
     commission,
     chainId,
-    blockNumber: BigInt(event.block.number),
-    logIndex: event.logIndex,
-    blockTimestamp: BigInt(event.block.timestamp),
+    blockNumber,
+    logIndex,
+    blockTimestamp,
   };
   context.CollatorStakingHub_CommissionUpdated.set(entity);
 
   const storedCollator = await context.CollatorSet.get(collator);
   if (storedCollator) {
-    const c = {...storedCollator, commission};
-    context.CollatorSet.set(c);
+    context.CollatorSet.set({...storedCollator, commission});
+  } else {
+    context.CollatorSet.set({
+      id: collator,
+      address: collator,
+      prev: undefined,
+      seq: undefined,
+      votes: undefined,
+      pool: undefined,
+      commission,
+      assets: undefined,
+      inset: undefined,
+      chainId,
+      blockNumber,
+      logIndex,
+      blockTimestamp,
+    });
   }
 });
 
@@ -158,23 +188,40 @@ CollatorStakingHub.NominationPoolCreated.handler(async ({event, context}) => {
   const chainId = BigInt(event.chainId);
   const pool = event.params.pool;
   const collator = event.params.collator;
+  const blockNumber = BigInt(event.block.number);
+  const logIndex = event.logIndex;
+  const blockTimestamp = BigInt(event.block.timestamp);
 
   const entity: CollatorStakingHub_NominationPoolCreated = {
     id: pool,
     pool,
     collator,
     chainId,
-    blockNumber: BigInt(event.block.number),
-    logIndex: event.logIndex,
-    blockTimestamp: BigInt(event.block.timestamp),
+    blockNumber,
+    logIndex,
+    blockTimestamp,
   };
   context.CollatorStakingHub_NominationPoolCreated.set(entity);
 
-
   const storedCollator = await context.CollatorSet.get(collator);
   if (storedCollator) {
-    const c = {...storedCollator, pool};
-    context.CollatorSet.set(c);
+    context.CollatorSet.set({...storedCollator, pool});
+  } else {
+    context.CollatorSet.set({
+      id: collator,
+      address: collator,
+      prev: undefined,
+      seq: undefined,
+      votes: undefined,
+      pool,
+      commission: undefined,
+      assets: undefined,
+      inset: undefined,
+      chainId,
+      blockNumber,
+      logIndex,
+      blockTimestamp,
+    });
   }
 });
 
