@@ -35,8 +35,6 @@ type CollatorStakingHub_NominationPoolCreated {
   id: ID!
   pool: String!
   collator: String!
-  prev: String
-  seq: Int!
 
   chainId: BigInt!
   blockNumber: BigInt!
@@ -99,6 +97,7 @@ type CollatorStakingHub_UpdateCollator {
 type CollatorSet {
   id: ID!
   address: String!
+  prev: String!
   seq: Int!
   votes: BigInt!
 

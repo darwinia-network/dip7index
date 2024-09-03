@@ -42,6 +42,7 @@ CollatorStakingHub.AddCollator.handler(async ({event, context}) => {
   const newCollator: CollatorSet = {
     id: cur,
     address: cur,
+    prev,
     seq: prevCollator ? (prevCollator.seq + 1) : 0,
     votes: votes,
     chainId,
@@ -96,8 +97,9 @@ CollatorStakingHub.UpdateCollator.handler(async ({event, context}) => {
     const curCollator: CollatorSet = {
       id: cur,
       address: cur,
-      seq: newPrevCollator.seq,
+      seq: newPrevCollator.seq + 1,
       votes: votes,
+      prev: newPrev,
       chainId,
       blockNumber: BigInt(event.block.number),
       logIndex: event.logIndex,
@@ -142,13 +144,6 @@ CollatorStakingHub.Initialized.handler(async ({event, context}) => {
 
 CollatorStakingHub.NominationPoolCreated.handler(async ({event, context}) => {
   const chainId = BigInt(event.chainId);
-  // const prev = event.params['prev'] ? String(event.params['prev']) : undefined;
-  const prev = undefined;
-  let seq = 0;
-  if (prev) {
-    const prevPool = await context.CollatorStakingHub_NominationPoolCreated.get(prev);
-    seq = (prevPool?.seq ?? 0) + 1
-  }
 
   const pool = event.params.pool;
   const collator = event.params.collator;
@@ -157,8 +152,6 @@ CollatorStakingHub.NominationPoolCreated.handler(async ({event, context}) => {
     id: pool,
     pool,
     collator,
-    prev,
-    seq,
     chainId,
     blockNumber: BigInt(event.block.number),
     logIndex: event.logIndex,
