@@ -9,6 +9,7 @@ contracts:
       - event: Initialized(uint64 version)
       - event: NominationPoolCreated(address indexed pool, address collator)
       - event: RemoveCollator(address indexed cur, address prev)
+      - event: RewardDistributed(address indexed collator, uint256 reward)
       - event: Staked(address indexed pool, address collator, address account, uint256 assets)
       - event: Unstaked(address indexed pool, address collator, address account, uint256 assets)
       - event: UpdateCollator(address indexed cur, uint256 votes, address oldPrev, address newPrev)

@@ -10,6 +10,7 @@ import {
   CollatorStakingHub_Initialized,
   CollatorStakingHub_NominationPoolCreated,
   CollatorStakingHub_RemoveCollator,
+  CollatorStakingHub_RewardDistributed,
   CollatorStakingHub_Staked,
   CollatorStakingHub_Unstaked,
   CollatorStakingHub_UpdateCollator,
@@ -63,6 +64,7 @@ CollatorStakingHub.AddCollator.handler(async ({event, context}) => {
       pool: undefined,
       commission: undefined,
       assets: 0n,
+      reward: undefined,
     };
     context.CollatorSet.set(newCollator);
   }
@@ -131,6 +133,24 @@ CollatorStakingHub.UpdateCollator.handler(async ({event, context}) => {
   }
 });
 
+CollatorStakingHub.RewardDistributed.handler(async ({event, context}) => {
+  const collator = event.params.collator;
+  const reward = event.params.reward;
+  const entity: CollatorStakingHub_RewardDistributed = {
+    id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
+    collator,
+    reward,
+  };
+  context.CollatorStakingHub_RewardDistributed.set(entity);
+
+  const storedCollator = await context.CollatorSet.get(collator);
+  if (storedCollator) {
+    context.CollatorSet.set({
+      ...storedCollator,
+      reward,
+    });
+  }
+});
 
 // # ===== staking
 
@@ -168,6 +188,7 @@ CollatorStakingHub.CommissionUpdated.handler(async ({event, context}) => {
       commission,
       assets: 0n,
       inset: 1,
+      reward: undefined,
       chainId,
       blockNumber,
       logIndex,
@@ -222,6 +243,7 @@ CollatorStakingHub.NominationPoolCreated.handler(async ({event, context}) => {
       pool,
       commission: undefined,
       assets: 0n,
+      reward: undefined,
       inset: 1,
       chainId,
       blockNumber,

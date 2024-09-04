@@ -53,6 +53,12 @@ type CollatorStakingHub_RemoveCollator {
   blockTimestamp: BigInt!
 }
 
+type CollatorStakingHub_RewardDistributed {
+  id: ID!
+  collator: String!
+  reward: BigInt!
+}
+
 type CollatorStakingHub_Staked {
   id: ID!
   pool: String!
@@ -104,6 +110,8 @@ type CollatorSet {
   pool: String
   commission: BigInt
   assets: BigInt
+
+  reward: BigInt
 
   inset: Int
 
