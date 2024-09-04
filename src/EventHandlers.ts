@@ -117,10 +117,10 @@ CollatorStakingHub.UpdateCollator.handler(async ({event, context}) => {
 
   const storedCollator = await context.CollatorSet.get(cur);
   const newPrevCollator = await context.CollatorSet.get(newPrev);
-  if (storedCollator && newPrevCollator) {
+  if (storedCollator) {
     const curCollator: CollatorSet = {
       ...storedCollator,
-      seq: (newPrevCollator.seq ?? 0) + 1,
+      seq: newPrevCollator ? (newPrevCollator.seq ?? 0) + 1 : 0,
       votes,
       prev: newPrev,
       blockNumber: BigInt(event.block.number),
