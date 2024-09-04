@@ -316,7 +316,7 @@ CollatorStakingHub.Unstaked.handler(async ({event, context}) => {
   context.CollatorStakingHub_Unstaked.set(entity);
 
   // staking account
-  const _stakingAccountId = `${pool}_${collator}_${account}`;
+  const _stakingAccountId = `${collator}_${account}`;
   const storedStakingAccount = await context.StakingAccount.get(_stakingAccountId);
   if (storedStakingAccount) {
     const stakingAccount: StakingAccount = {
