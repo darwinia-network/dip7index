@@ -1,0 +1,86 @@
+type AddCollator @entity(immutable: true) {
+  id: Bytes!
+  cur: Bytes! # address
+  votes: BigInt! # uint256
+  prev: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type CommissionUpdated @entity(immutable: true) {
+  id: Bytes!
+  collator: Bytes! # address
+  commission: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Initialized @entity(immutable: true) {
+  id: Bytes!
+  version: BigInt! # uint64
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type NominationPoolCreated @entity(immutable: true) {
+  id: Bytes!
+  pool: Bytes! # address
+  collator: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type RemoveCollator @entity(immutable: true) {
+  id: Bytes!
+  cur: Bytes! # address
+  prev: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type RewardDistributed @entity(immutable: true) {
+  id: Bytes!
+  collator: Bytes! # address
+  reward: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Staked @entity(immutable: true) {
+  id: Bytes!
+  pool: Bytes! # address
+  collator: Bytes! # address
+  account: Bytes! # address
+  assets: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Unstaked @entity(immutable: true) {
+  id: Bytes!
+  pool: Bytes! # address
+  collator: Bytes! # address
+  account: Bytes! # address
+  assets: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type UpdateCollator @entity(immutable: true) {
+  id: Bytes!
+  cur: Bytes! # address
+  votes: BigInt! # uint256
+  oldPrev: Bytes! # address
+  newPrev: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
