@@ -84,3 +84,36 @@ type UpdateCollator @entity(immutable: true) {
   blockTimestamp: BigInt!
   transactionHash: Bytes!
 }
+
+
+###### ==== custom
+
+type CollatorSet @entity(immutable: true) {
+  id: ID!
+  address: String!
+  prev: String
+  seq: Int
+  votes: BigInt
+
+  pool: String
+  commission: BigInt
+  assets: BigInt
+
+  reward: BigInt
+
+  inset: Int
+
+  blockNumber: BigInt
+  logIndex: BigInt
+  blockTimestamp: BigInt
+}
+
+type StakingAccount @entity(immutable: true) {
+  id: ID!
+  pool: String!
+  collator: String!
+  account: String!
+
+  assets: BigInt!
+}
+

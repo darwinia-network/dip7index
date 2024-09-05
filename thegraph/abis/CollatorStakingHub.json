@@ -1,40 +1,16 @@
 [
-  {
-    "inputs": [],
-    "stateMutability": "nonpayable",
-    "type": "constructor"
-  },
+  { "inputs": [], "stateMutability": "nonpayable", "type": "constructor" },
   {
     "inputs": [
-      {
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
-      }
+      { "internalType": "address", "name": "account", "type": "address" }
     ],
     "name": "AddressInsufficientBalance",
     "type": "error"
   },
-  {
-    "inputs": [],
-    "name": "FailedInnerCall",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "InvalidInitialization",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "NotInitializing",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "ReentrancyGuardReentrantCall",
-    "type": "error"
-  },
+  { "inputs": [], "name": "FailedInnerCall", "type": "error" },
+  { "inputs": [], "name": "InvalidInitialization", "type": "error" },
+  { "inputs": [], "name": "NotInitializing", "type": "error" },
+  { "inputs": [], "name": "ReentrancyGuardReentrantCall", "type": "error" },
   {
     "anonymous": false,
     "inputs": [
@@ -245,86 +221,44 @@
   {
     "inputs": [],
     "name": "COMMISSION_LOCK_PERIOD",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [],
     "name": "DEPOSIT",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [],
     "name": "STAKING_LOCK_PERIOD",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [],
     "name": "SYSTEM_PALLET",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "commission",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "assets",
-        "type": "uint256"
-      }
+      { "internalType": "uint256", "name": "commission", "type": "uint256" },
+      { "internalType": "uint256", "name": "assets", "type": "uint256" }
     ],
     "name": "assetsToVotes",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "stateMutability": "pure",
     "type": "function"
   },
   {
     "inputs": [
-      {
-        "internalType": "address",
-        "name": "collator",
-        "type": "address"
-      }
+      { "internalType": "address", "name": "collator", "type": "address" }
     ],
     "name": "claim",
     "outputs": [],
@@ -333,16 +267,8 @@
   },
   {
     "inputs": [
-      {
-        "internalType": "address",
-        "name": "prev",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "commission",
-        "type": "uint256"
-      }
+      { "internalType": "address", "name": "prev", "type": "address" },
+      { "internalType": "uint256", "name": "commission", "type": "uint256" }
     ],
     "name": "collate",
     "outputs": [],
@@ -350,95 +276,41 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
+    "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
     "name": "collators",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
     "stateMutability": "view",
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
+    "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
     "name": "commissionLocks",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "stateMutability": "view",
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
+    "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
     "name": "commissionOf",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [],
     "name": "count",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      {
-        "internalType": "address",
-        "name": "prev",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "commission",
-        "type": "uint256"
-      }
+      { "internalType": "address", "name": "prev", "type": "address" },
+      { "internalType": "uint256", "name": "commission", "type": "uint256" }
     ],
     "name": "createAndCollate",
     "outputs": [
-      {
-        "internalType": "address",
-        "name": "pool",
-        "type": "address"
-      }
+      { "internalType": "address", "name": "pool", "type": "address" }
     ],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -447,51 +319,25 @@
     "inputs": [],
     "name": "createNominationPool",
     "outputs": [
-      {
-        "internalType": "address",
-        "name": "pool",
-        "type": "address"
-      }
+      { "internalType": "address", "name": "pool", "type": "address" }
     ],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
+    "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "name": "depositInfos",
     "outputs": [
-      {
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "assets",
-        "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "collator",
-        "type": "address"
-      }
+      { "internalType": "address", "name": "account", "type": "address" },
+      { "internalType": "uint256", "name": "assets", "type": "uint256" },
+      { "internalType": "address", "name": "collator", "type": "address" }
     ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      {
-        "internalType": "address",
-        "name": "collator",
-        "type": "address"
-      }
+      { "internalType": "address", "name": "collator", "type": "address" }
     ],
     "name": "distributeReward",
     "outputs": [],
@@ -501,47 +347,23 @@
   {
     "inputs": [],
     "name": "gRING",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
     "stateMutability": "view",
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "k",
-        "type": "uint256"
-      }
-    ],
+    "inputs": [{ "internalType": "uint256", "name": "k", "type": "uint256" }],
     "name": "getTopCollators",
     "outputs": [
-      {
-        "internalType": "address[]",
-        "name": "",
-        "type": "address[]"
-      }
+      { "internalType": "address[]", "name": "", "type": "address[]" }
     ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      {
-        "internalType": "address",
-        "name": "gring",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "dps",
-        "type": "address"
-      }
+      { "internalType": "address", "name": "gring", "type": "address" },
+      { "internalType": "address", "name": "dps", "type": "address" }
     ],
     "name": "initialize",
     "outputs": [],
@@ -549,46 +371,22 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
+    "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
     "name": "poolOf",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      {
-        "internalType": "address",
-        "name": "collator",
-        "type": "address"
-      },
+      { "internalType": "address", "name": "collator", "type": "address" },
       {
         "internalType": "uint256[]",
         "name": "depositIds",
         "type": "uint256[]"
       },
-      {
-        "internalType": "address",
-        "name": "oldPrev",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "newPrev",
-        "type": "address"
-      }
+      { "internalType": "address", "name": "oldPrev", "type": "address" },
+      { "internalType": "address", "name": "newPrev", "type": "address" }
     ],
     "name": "stakeDeposits",
     "outputs": [],
@@ -597,21 +395,9 @@
   },
   {
     "inputs": [
-      {
-        "internalType": "address",
-        "name": "collator",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "oldPrev",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "newPrev",
-        "type": "address"
-      }
+      { "internalType": "address", "name": "collator", "type": "address" },
+      { "internalType": "address", "name": "oldPrev", "type": "address" },
+      { "internalType": "address", "name": "newPrev", "type": "address" }
     ],
     "name": "stakeRING",
     "outputs": [],
@@ -620,164 +406,76 @@
   },
   {
     "inputs": [
-      {
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "index",
-        "type": "uint256"
-      }
+      { "internalType": "address", "name": "account", "type": "address" },
+      { "internalType": "uint256", "name": "index", "type": "uint256" }
     ],
     "name": "stakedDepositsAt",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      {
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "depositId",
-        "type": "uint256"
-      }
+      { "internalType": "address", "name": "account", "type": "address" },
+      { "internalType": "uint256", "name": "depositId", "type": "uint256" }
     ],
     "name": "stakedDepositsContains",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      {
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
-      }
+      { "internalType": "address", "name": "account", "type": "address" }
     ],
     "name": "stakedDepositsLength",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      {
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
-      }
+      { "internalType": "address", "name": "account", "type": "address" }
     ],
     "name": "stakedDepositsOf",
     "outputs": [
-      {
-        "internalType": "uint256[]",
-        "name": "",
-        "type": "uint256[]"
-      }
+      { "internalType": "uint256[]", "name": "", "type": "uint256[]" }
     ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      {
-        "internalType": "address",
-        "name": "collator",
-        "type": "address"
-      }
+      { "internalType": "address", "name": "collator", "type": "address" }
     ],
     "name": "stakedOf",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
+      { "internalType": "address", "name": "", "type": "address" },
+      { "internalType": "address", "name": "", "type": "address" }
     ],
     "name": "stakedRINGOf",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
+      { "internalType": "address", "name": "", "type": "address" },
+      { "internalType": "address", "name": "", "type": "address" }
     ],
     "name": "stakingLocks",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      {
-        "internalType": "address",
-        "name": "prev",
-        "type": "address"
-      }
+      { "internalType": "address", "name": "prev", "type": "address" }
     ],
     "name": "stopCollation",
     "outputs": [],
@@ -786,26 +484,14 @@
   },
   {
     "inputs": [
-      {
-        "internalType": "address",
-        "name": "collator",
-        "type": "address"
-      },
+      { "internalType": "address", "name": "collator", "type": "address" },
       {
         "internalType": "uint256[]",
         "name": "depositIds",
         "type": "uint256[]"
       },
-      {
-        "internalType": "address",
-        "name": "oldPrev",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "newPrev",
-        "type": "address"
-      }
+      { "internalType": "address", "name": "oldPrev", "type": "address" },
+      { "internalType": "address", "name": "newPrev", "type": "address" }
     ],
     "name": "unstakeDeposits",
     "outputs": [],
@@ -814,26 +500,10 @@
   },
   {
     "inputs": [
-      {
-        "internalType": "address",
-        "name": "collator",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "assets",
-        "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "oldPrev",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "newPrev",
-        "type": "address"
-      }
+      { "internalType": "address", "name": "collator", "type": "address" },
+      { "internalType": "uint256", "name": "assets", "type": "uint256" },
+      { "internalType": "address", "name": "oldPrev", "type": "address" },
+      { "internalType": "address", "name": "newPrev", "type": "address" }
     ],
     "name": "unstakeRING",
     "outputs": [],
@@ -842,21 +512,9 @@
   },
   {
     "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "commission",
-        "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "oldPrev",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "newPrev",
-        "type": "address"
-      }
+      { "internalType": "uint256", "name": "commission", "type": "uint256" },
+      { "internalType": "address", "name": "oldPrev", "type": "address" },
+      { "internalType": "address", "name": "newPrev", "type": "address" }
     ],
     "name": "updateCommission",
     "outputs": [],
@@ -864,21 +522,9 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
+    "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
     "name": "votesOf",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "stateMutability": "view",
     "type": "function"
   }
