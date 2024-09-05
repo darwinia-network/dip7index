@@ -37,35 +37,24 @@ export function handleAddCollator(event: AddCollatorEvent): void {
   entity.transactionHash = event.transaction.hash
   entity.save()
 
-  const storedCollator = CollatorSet.load(entity.cur.toString());
+  let storedCollator = CollatorSet.load(entity.cur.toString());
   const prevCollator = CollatorSet.load(entity.prev.toString());
 
-  let newCollatorData;
-  if (storedCollator) {
-    newCollatorData = storedCollator;
-    newCollatorData.prev = entity.prev.toString();
-    newCollatorData.seq = prevCollator ? ((prevCollator.seq ?? 0) + 1) : 0;
-    newCollatorData.votes = entity.votes;
-    newCollatorData.inset = 1;
-    newCollatorData.blockNumber = entity.blockNumber;
-    newCollatorData.logIndex = event.logIndex;
-    newCollatorData.blockTimestamp = entity.blockTimestamp;
-  } else {
-    newCollatorData = new CollatorSet(entity.cur.toString())
-    newCollatorData.prev = entity.prev.toString();
-    newCollatorData.seq = prevCollator ? ((prevCollator.seq ?? 0) + 1) : 0;
-    newCollatorData.votes = entity.votes;
-    newCollatorData.inset = 1;
-    newCollatorData.blockNumber = entity.blockNumber;
-    newCollatorData.logIndex = event.logIndex;
-    newCollatorData.blockTimestamp = entity.blockTimestamp;
-    newCollatorData.address = entity.cur.toString();
-    newCollatorData.pool = undefined;
-    newCollatorData.commission = undefined;
-    newCollatorData.assets = 0n;
-    newCollatorData.reward = undefined;
+  if (!storedCollator) {
+    storedCollator = new CollatorSet(entity.cur.toString())
+    storedCollator.address = entity.cur.toString();
+    storedCollator.assets = BigInt.zero();
   }
-  newCollatorData.save();
+
+  storedCollator.prev = entity.prev.toString();
+  storedCollator.seq = prevCollator ? (prevCollator.seq + 1) : 0;
+  storedCollator.votes = entity.votes;
+  storedCollator.inset = 1;
+  storedCollator.blockNumber = entity.blockNumber;
+  storedCollator.logIndex = event.logIndex;
+  storedCollator.blockTimestamp = entity.blockTimestamp;
+
+  storedCollator.save();
 }
 
 export function handleCommissionUpdated(event: CommissionUpdatedEvent): void {
@@ -158,7 +147,7 @@ export function handleRemoveCollator(event: RemoveCollatorEvent): void {
     storedCollator.inset = 0;
     storedCollator.votes = null;
     storedCollator.prev = null;
-    storedCollator.seq = 9999999999;
+    storedCollator.seq = 9999;
     storedCollator.save();
     return;
   }
@@ -209,14 +198,15 @@ export function handleStaked(event: StakedEvent): void {
     storedStakingAccount.pool = entity.pool.toString();
     storedStakingAccount.collator = entity.collator.toString();
     storedStakingAccount.account = entity.account.toString();
+    storedStakingAccount.assets = BigInt.zero();
   }
-  storedStakingAccount.assets = (storedStakingAccount.assets ?? BigInt.fromI32(0)).plus(entity.assets);
+  storedStakingAccount.assets = storedStakingAccount.assets.plus(entity.assets);
   storedStakingAccount.save();
 
 
   let storedCollator = CollatorSet.load(entity.collator.toString());
   if (storedCollator) {
-    storedCollator.assets = (storedCollator.assets ?? BigInt.fromI32(0).plus(entity.assets));
+    storedCollator.assets = (storedCollator.assets ? storedCollator.assets! : BigInt.zero()).plus(entity.assets);
     storedCollator.save();
   }
 }
@@ -244,14 +234,15 @@ export function handleUnstaked(event: UnstakedEvent): void {
     storedStakingAccount.pool = entity.pool.toString();
     storedStakingAccount.collator = entity.collator.toString();
     storedStakingAccount.account = entity.account.toString();
+    storedStakingAccount.assets = BigInt.zero();
   }
-  storedStakingAccount.assets = (storedStakingAccount.assets ?? BigInt.fromI32(0)).div(entity.assets);
+  storedStakingAccount.assets = storedStakingAccount.assets.div(entity.assets);
   storedStakingAccount.save();
 
 
   let storedCollator = CollatorSet.load(entity.collator.toString());
   if (storedCollator) {
-    storedCollator.assets = (storedCollator.assets ?? BigInt.fromI32(0).div(entity.assets));
+    storedCollator.assets = (storedCollator.assets ? storedCollator.assets! : BigInt.fromI32(0)).div(entity.assets);
     storedCollator.save();
   }
 }
@@ -275,7 +266,7 @@ export function handleUpdateCollator(event: UpdateCollatorEvent): void {
   let storedCollator = CollatorSet.load(entity.cur.toString());
   let prevCollator = CollatorSet.load(entity.newPrev.toString());
   if (storedCollator) {
-    storedCollator.seq = prevCollator ? (prevCollator.seq ?? 0) + 1 : 0;
+    storedCollator.seq = prevCollator ? (prevCollator.seq) + 1 : 0;
     storedCollator.votes = entity.votes;
     storedCollator.prev = entity.newPrev.toString();
     storedCollator.blockNumber = event.block.number;
