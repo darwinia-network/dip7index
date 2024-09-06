@@ -116,9 +116,9 @@ type CollatorSet {
   inset: Int
 
   chainId: BigInt!
-  blockNumber: BigInt!
-  logIndex: Int!
-  blockTimestamp: BigInt!
+  blockNumber: BigInt
+  logIndex: Int
+  blockTimestamp: BigInt
 }
 
 type StakingAccount {

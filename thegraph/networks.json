@@ -1,8 +1,0 @@
-{
-  "mainnet": {
-    "CollatorStakingHub": {
-      "address": "0xb037E75fE2BFA42DdDC17BB90963Dafe10A5Dd11",
-      "startBlock": 925175
-    }
-  }
-}
