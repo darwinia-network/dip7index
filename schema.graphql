@@ -57,6 +57,11 @@ type CollatorStakingHub_RewardDistributed {
   id: ID!
   collator: String!
   reward: BigInt!
+
+  chainId: BigInt!
+  blockNumber: BigInt!
+  logIndex: Int!
+  blockTimestamp: BigInt!
 }
 
 type CollatorStakingHub_Staked {
@@ -104,7 +109,7 @@ type CollatorSet {
   id: ID!
   address: String!
   prev: String
-  seq: Int
+  key: String
   votes: BigInt
 
   pool: String
