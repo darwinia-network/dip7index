@@ -199,7 +199,7 @@ export async function staked(
   if (curCollator) {
     context.CollatorSet.set({
       ...curCollator,
-      assets: (curCollator.assets ?? 0n) + entity.assets,
+      assets: BigInt(curCollator.assets ?? 0n) + entity.assets,
     });
   }
 }
@@ -229,7 +229,7 @@ export async function unstaked(
   if (curCollator) {
     context.CollatorSet.set({
       ...curCollator,
-      assets: (curCollator.assets ?? 0n) - entity.assets,
+      assets: BigInt(curCollator.assets ?? 0n) - entity.assets,
     });
   }
 }
