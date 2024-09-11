@@ -22,12 +22,12 @@ export async function addCollator(
   context: handlerContext,
   entity: CollatorStakingHub_AddCollator,
 ) {
-  const curCollator = await context.CollatorSet.get(entity.cur);
+  const curCollator = await context.CollatorSet.get(entity.cur.toLowerCase());
   // const prevCollator = await context.CollatorSet.get(entity.prev);
   const newCollatorInfo: CollatorSet = {
-    id: entity.cur,
-    address: entity.cur,
-    prev: entity.prev,
+    id: entity.cur.toLowerCase(),
+    address: entity.cur.toLowerCase(),
+    prev: entity.prev.toLowerCase(),
     key: genKey(entity.cur, entity.votes),
     votes: entity.votes,
     inset: 1,
@@ -77,7 +77,7 @@ export async function updateCollator(
   // const curCollator = _pickCollator(collators, {id: entity.cur});
   // const newPrevCollator = _pickCollator(collators, {id: entity.newPrev});
 
-  const curCollator = await context.CollatorSet.get(entity.cur);
+  const curCollator = await context.CollatorSet.get(entity.cur.toLowerCase());
   if (!curCollator) {
     return;
   }
@@ -96,7 +96,7 @@ export async function rewardDistributed(
   context: handlerContext,
   entity: CollatorStakingHub_RewardDistributed
 ) {
-  const curCollator = await context.CollatorSet.get(entity.collator);
+  const curCollator = await context.CollatorSet.get(entity.collator.toLowerCase());
   if (!curCollator) return;
   context.CollatorSet.set({
     ...curCollator,
@@ -110,7 +110,7 @@ export async function commissionUpdated(
 ) {
   // const collators = await _queryRawCollatorSet(context, entity.chainId);
   // let curCollator = _pickCollator(collators, {id: entity.collator});
-  const curCollator = await context.CollatorSet.get(entity.collator);
+  const curCollator = await context.CollatorSet.get(entity.collator.toLowerCase());
   if (curCollator) {
     // _updateCollator(collators, {
     //   ...curCollator,
@@ -127,8 +127,8 @@ export async function commissionUpdated(
   // collators.splice(0, 0, curCollator);
   // _store(context, entity.chainId, collators);
   context.CollatorSet.set({
-    id: entity.collator,
-    address: entity.collator,
+    id: entity.collator.toLowerCase(),
+    address: entity.collator.toLowerCase(),
     prev: undefined,
     key: undefined,
     votes: undefined,
@@ -150,7 +150,7 @@ export async function nominationPoolCreated(
 ) {
   // const collators = await _queryRawCollatorSet(context, entity.chainId);
   // let curCollator = _pickCollator(collators, {id: entity.collator});
-  const curCollator = await context.CollatorSet.get(entity.collator);
+  const curCollator = await context.CollatorSet.get(entity.collator.toLowerCase());
   if (curCollator) {
     context.CollatorSet.set({
       ...curCollator,
@@ -159,8 +159,8 @@ export async function nominationPoolCreated(
     return;
   }
   context.CollatorSet.set({
-    id: entity.collator,
-    address: entity.collator,
+    id: entity.collator.toLowerCase(),
+    address: entity.collator.toLowerCase(),
     prev: undefined,
     key: undefined,
     votes: undefined,
@@ -181,21 +181,21 @@ export async function staked(
   entity: CollatorStakingHub_Staked
 ) {
   // staking account
-  const _stakingAccountId = `${entity.collator}_${entity.account}`;
+  const _stakingAccountId = `${entity.collator.toLowerCase()}_${entity.account.toLowerCase()}`;
 
   const storedStakingAccount = await context.StakingAccount.get(_stakingAccountId);
   context.StakingAccount.set({
     id: _stakingAccountId,
     pool: entity.pool,
-    collator: entity.collator,
-    account: entity.account,
+    collator: entity.collator.toLowerCase(),
+    account: entity.account.toLowerCase(),
     assets: BigInt(storedStakingAccount?.assets ?? 0) + entity.assets,
     chainId: entity.chainId
   });
 
 
   // staking collator
-  const curCollator = await context.CollatorSet.get(entity.collator);
+  const curCollator = await context.CollatorSet.get(entity.collator.toLowerCase());
   if (curCollator) {
     context.CollatorSet.set({
       ...curCollator,
@@ -209,14 +209,14 @@ export async function unstaked(
   entity: CollatorStakingHub_Unstaked
 ) {
   // staking account
-  const _stakingAccountId = `${entity.collator}_${entity.account}`;
+  const _stakingAccountId = `${entity.collator.toLowerCase()}_${entity.account.toLowerCase()}`;
   const storedStakingAccount = await context.StakingAccount.get(_stakingAccountId);
   if (storedStakingAccount) {
     const stakingAccount: StakingAccount = {
       id: _stakingAccountId,
-      pool: entity.pool,
-      collator: entity.collator,
-      account: entity.account,
+      pool: entity.pool.toLowerCase(),
+      collator: entity.collator.toLowerCase(),
+      account: entity.account.toLowerCase(),
       assets: storedStakingAccount.assets - entity.assets,
       chainId: entity.chainId,
     };
@@ -225,7 +225,7 @@ export async function unstaked(
 
   // staking collator
 
-  const curCollator = await context.CollatorSet.get(entity.collator);
+  const curCollator = await context.CollatorSet.get(entity.collator.toLowerCase());
   if (curCollator) {
     context.CollatorSet.set({
       ...curCollator,
