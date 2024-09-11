@@ -19,13 +19,13 @@ networks:
     contracts:
       - name: CollatorStakingHub
         address:
-          - 0xb037E75fE2BFA42DdDC17BB90963Dafe10A5Dd11
+          - 0xa4fFAC7A5Da311D724eD47393848f694Baee7930
   - id: 46
     start_block: 0
     contracts:
       - name: CollatorStakingHub
         address:
-          - 0xb037E75fE2BFA42DdDC17BB90963Dafe10A5Dd11
+          - 0xa4fFAC7A5Da311D724eD47393848f694Baee7930
   - id: 701
     rpc_config:
       url: https://koi-rpc.darwinia.network
@@ -33,7 +33,7 @@ networks:
     contracts:
       - name: CollatorStakingHub
         address:
-          - 0xb037E75fE2BFA42DdDC17BB90963Dafe10A5Dd11
+          - 0xa4fFAC7A5Da311D724eD47393848f694Baee7930
 rollback_on_reorg: false
 
 field_selection:
