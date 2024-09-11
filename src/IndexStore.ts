@@ -38,7 +38,7 @@ export async function addCollator(
 
     pool: curCollator ? curCollator.pool : undefined,
     commission: curCollator ? curCollator.commission : undefined,
-    assets: 0n,
+    assets: curCollator ? curCollator.assets : undefined,
     reward: curCollator ? curCollator.reward : undefined,
   };
   if (curCollator) {
@@ -197,9 +197,10 @@ export async function staked(
   // staking collator
   const curCollator = await context.CollatorSet.get(entity.collator.toLowerCase());
   if (curCollator) {
+    const assets = BigInt(curCollator.assets ?? 0n) + entity.assets;
     context.CollatorSet.set({
       ...curCollator,
-      assets: BigInt(curCollator.assets ?? 0n) + entity.assets,
+      assets,
     });
   }
 }
