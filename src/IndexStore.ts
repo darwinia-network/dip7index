@@ -36,10 +36,10 @@ export async function addCollator(
     logIndex: entity.logIndex,
     blockTimestamp: entity.blockTimestamp,
 
-    pool: undefined,
-    commission: undefined,
+    pool: curCollator ? curCollator.pool : undefined,
+    commission: curCollator ? curCollator.commission : undefined,
     assets: 0n,
-    reward: undefined,
+    reward: curCollator ? curCollator.reward : undefined,
   };
   if (curCollator) {
     context.CollatorSet.set({

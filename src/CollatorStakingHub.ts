@@ -22,8 +22,8 @@ import * as store from './IndexStore'
 
 CollatorStakingHub.AddCollator.handler(async ({event, context}) => {
   const chainId = BigInt(event.chainId);
-  const cur = event.params.cur;
-  const prev = event.params.prev;
+  const cur = event.params.cur.toLowerCase();
+  const prev = event.params.prev.toLowerCase();
   const votes = event.params.votes;
   const blockNumber = BigInt(event.block.number);
   const logIndex = event.logIndex;
@@ -47,11 +47,11 @@ CollatorStakingHub.AddCollator.handler(async ({event, context}) => {
 
 CollatorStakingHub.RemoveCollator.handler(async ({event, context}) => {
   const chainId = BigInt(event.chainId);
-  const cur = event.params.cur;
+  const cur = event.params.cur.toLowerCase();
   const entity: CollatorStakingHub_RemoveCollator = {
     id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
     cur,
-    prev: event.params.prev,
+    prev: event.params.prev.toLowerCase(),
     chainId,
     blockNumber: BigInt(event.block.number),
     logIndex: event.logIndex,
@@ -65,9 +65,9 @@ CollatorStakingHub.RemoveCollator.handler(async ({event, context}) => {
 
 CollatorStakingHub.UpdateCollator.handler(async ({event, context}) => {
   const chainId = BigInt(event.chainId);
-  const cur = event.params.cur;
-  const oldPrev = event.params.oldPrev;
-  const newPrev = event.params.newPrev;
+  const cur = event.params.cur.toLowerCase();
+  const oldPrev = event.params.oldPrev.toLowerCase();
+  const newPrev = event.params.newPrev.toLowerCase();
   const votes = event.params.votes;
   const entity: CollatorStakingHub_UpdateCollator = {
     id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
@@ -87,7 +87,7 @@ CollatorStakingHub.UpdateCollator.handler(async ({event, context}) => {
 
 CollatorStakingHub.RewardDistributed.handler(async ({event, context}) => {
   const chainId = BigInt(event.chainId);
-  const collator = event.params.collator;
+  const collator = event.params.collator.toLowerCase();
   const reward = event.params.reward;
   const entity: CollatorStakingHub_RewardDistributed = {
     id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
@@ -108,7 +108,7 @@ CollatorStakingHub.RewardDistributed.handler(async ({event, context}) => {
 
 CollatorStakingHub.CommissionUpdated.handler(async ({event, context}) => {
   const chainId = BigInt(event.chainId);
-  const collator = event.params.collator;
+  const collator = event.params.collator.toLowerCase();
   const commission = event.params.commission;
   const blockNumber = BigInt(event.block.number);
   const logIndex = event.logIndex;
@@ -144,8 +144,8 @@ CollatorStakingHub.Initialized.handler(async ({event, context}) => {
 
 CollatorStakingHub.NominationPoolCreated.handler(async ({event, context}) => {
   const chainId = BigInt(event.chainId);
-  const pool = event.params.pool;
-  const collator = event.params.collator;
+  const pool = event.params.pool.toLowerCase();
+  const collator = event.params.collator.toLowerCase();
   const blockNumber = BigInt(event.block.number);
   const logIndex = event.logIndex;
   const blockTimestamp = BigInt(event.block.timestamp);
@@ -166,8 +166,8 @@ CollatorStakingHub.NominationPoolCreated.handler(async ({event, context}) => {
 
 CollatorStakingHub.Staked.handler(async ({event, context}) => {
   const chainId = BigInt(event.chainId);
-  const pool = event.params.pool;
-  const collator = event.params.collator;
+  const pool = event.params.pool.toLowerCase();
+  const collator = event.params.collator.toLowerCase();
   const account = event.params.account;
   const assets = event.params.assets;
 
@@ -189,8 +189,8 @@ CollatorStakingHub.Staked.handler(async ({event, context}) => {
 
 CollatorStakingHub.Unstaked.handler(async ({event, context}) => {
   const chainId = BigInt(event.chainId);
-  const pool = event.params.pool;
-  const collator = event.params.collator;
+  const pool = event.params.pool.toLowerCase();
+  const collator = event.params.collator.toLowerCase();
   const account = event.params.account;
   const assets = event.params.assets;
 
