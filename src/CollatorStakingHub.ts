@@ -168,7 +168,7 @@ CollatorStakingHub.Staked.handler(async ({event, context}) => {
   const chainId = BigInt(event.chainId);
   const pool = event.params.pool.toLowerCase();
   const collator = event.params.collator.toLowerCase();
-  const account = event.params.account;
+  const account = event.params.account.toLowerCase();
   const assets = event.params.assets;
 
   const entity: CollatorStakingHub_Staked = {
@@ -191,7 +191,7 @@ CollatorStakingHub.Unstaked.handler(async ({event, context}) => {
   const chainId = BigInt(event.chainId);
   const pool = event.params.pool.toLowerCase();
   const collator = event.params.collator.toLowerCase();
-  const account = event.params.account;
+  const account = event.params.account.toLowerCase();
   const assets = event.params.assets;
 
   const entity: CollatorStakingHub_Unstaked = {

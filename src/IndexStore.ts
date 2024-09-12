@@ -181,7 +181,7 @@ export async function staked(
   entity: CollatorStakingHub_Staked
 ) {
   // staking account
-  const _stakingAccountId = `${entity.collator.toLowerCase()}_${entity.account.toLowerCase()}`;
+  const _stakingAccountId = `${entity.collator}_${entity.account}`.toLowerCase();
 
   const storedStakingAccount = await context.StakingAccount.get(_stakingAccountId);
   context.StakingAccount.set({
@@ -210,7 +210,7 @@ export async function unstaked(
   entity: CollatorStakingHub_Unstaked
 ) {
   // staking account
-  const _stakingAccountId = `${entity.collator.toLowerCase()}_${entity.account.toLowerCase()}`;
+  const _stakingAccountId = `${entity.collator}_${entity.account}`.toLowerCase();
   const storedStakingAccount = await context.StakingAccount.get(_stakingAccountId);
   if (storedStakingAccount) {
     const stakingAccount: StakingAccount = {
