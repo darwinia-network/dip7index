@@ -1,0 +1,119 @@
+type AddCollator @entity(immutable: true) {
+  id: String!
+  cur: String! # address
+  votes: BigInt! # uint256
+  prev: String! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: String!
+}
+
+type CommissionUpdated @entity(immutable: true) {
+  id: String!
+  collator: String! # address
+  commission: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: String!
+}
+
+type Initialized @entity(immutable: true) {
+  id: String!
+  version: BigInt! # uint64
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: String!
+}
+
+type NominationPoolCreated @entity(immutable: true) {
+  id: String!
+  pool: String! # address
+  collator: String! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: String!
+}
+
+type RemoveCollator @entity(immutable: true) {
+  id: String!
+  cur: String! # address
+  prev: String! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: String!
+}
+
+type RewardDistributed @entity(immutable: true) {
+  id: String!
+  collator: String! # address
+  reward: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: String!
+}
+
+type Staked @entity(immutable: true) {
+  id: String!
+  pool: String! # address
+  collator: String! # address
+  account: String! # address
+  assets: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: String!
+}
+
+type Unstaked @entity(immutable: true) {
+  id: String!
+  pool: String! # address
+  collator: String! # address
+  account: String! # address
+  assets: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: String!
+}
+
+type UpdateCollator @entity(immutable: true) {
+  id: String!
+  cur: String! # address
+  votes: BigInt! # uint256
+  oldPrev: String! # address
+  newPrev: String! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: String!
+}
+
+
+###### ==== custom
+
+type CollatorSet @entity(immutable: true) {
+  id: ID!
+  address: String!
+  prev: String
+  key: String
+  votes: BigInt
+
+  pool: String
+  commission: BigInt
+  assets: BigInt
+
+  reward: BigInt
+
+  inset: Int
+
+  blockNumber: BigInt
+  logIndex: BigInt
+  blockTimestamp: BigInt
+}
+
+type StakingAccount @entity(immutable: true) {
+  id: ID!
+  pool: String!
+  collator: String!
+  account: String!
+
+  assets: BigInt!
+}
+
