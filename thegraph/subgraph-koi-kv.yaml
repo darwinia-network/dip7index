@@ -6,7 +6,7 @@ schema:
 dataSources:
   - kind: ethereum
     name: CollatorStakingHub
-    network: koi
+    network: koi-kv
     source:
       address: "0xa4fFAC7A5Da311D724eD47393848f694Baee7930"
       abi: CollatorStakingHub

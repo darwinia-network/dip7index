@@ -44,23 +44,23 @@ export function handleAddCollator(event: AddCollatorEvent): void {
   entity.transactionHash = event.transaction.hash.toHex().toLowerCase()
   entity.save()
 
-  // const newCollatorInfo = new CollatorSet(entity.cur);
-  // newCollatorInfo.address = entity.cur;
-  // newCollatorInfo.prev = entity.prev;
-  // newCollatorInfo.key = genKey(entity.cur, entity.votes);
-  // newCollatorInfo.votes = entity.votes;
-  // newCollatorInfo.inset = 1;
-  // newCollatorInfo.blockNumber = entity.blockNumber;
-  // newCollatorInfo.logIndex = event.logIndex;
-  // newCollatorInfo.blockTimestamp = entity.blockTimestamp;
+  const newCollatorInfo = new CollatorSet(entity.cur);
+  newCollatorInfo.address = entity.cur;
+  newCollatorInfo.prev = entity.prev;
+  newCollatorInfo.key = genKey(entity.cur, entity.votes);
+  newCollatorInfo.votes = entity.votes;
+  newCollatorInfo.inset = 1;
+  newCollatorInfo.blockNumber = entity.blockNumber;
+  newCollatorInfo.logIndex = event.logIndex;
+  newCollatorInfo.blockTimestamp = entity.blockTimestamp;
   
-  // const curCollator = CollatorSet.load(entity.cur);
-  // newCollatorInfo.pool = curCollator ? curCollator.pool : null;
-  // newCollatorInfo.commission = curCollator ? curCollator.commission : null;
-  // newCollatorInfo.assets = curCollator ? curCollator.assets : BigInt.zero();
-  // newCollatorInfo.reward = curCollator ? curCollator.reward : BigInt.zero();
+  const curCollator = CollatorSet.load(entity.cur);
+  newCollatorInfo.pool = curCollator ? curCollator.pool : null;
+  newCollatorInfo.commission = curCollator ? curCollator.commission : null;
+  newCollatorInfo.assets = curCollator ? curCollator.assets : BigInt.zero();
+  newCollatorInfo.reward = curCollator ? curCollator.reward : BigInt.zero();
   
-  // newCollatorInfo.save();
+  newCollatorInfo.save();
 }
 
 export function handleCommissionUpdated(event: CommissionUpdatedEvent): void {
@@ -76,18 +76,18 @@ export function handleCommissionUpdated(event: CommissionUpdatedEvent): void {
 
   entity.save()
 
-  // let storedCollator = CollatorSet.load(entity.collator);
-  // if (storedCollator) {
-  //   storedCollator.commission = entity.commission;
-  //   storedCollator.save();
-  //   return;
-  // }
-  // storedCollator = new CollatorSet(entity.collator);
-  // storedCollator.address = entity.collator;
-  // storedCollator.commission = entity.commission;
-  // storedCollator.assets = BigInt.zero();
-  // storedCollator.inset = 1;
-  // storedCollator.save();
+  let storedCollator = CollatorSet.load(entity.collator);
+  if (storedCollator) {
+    storedCollator.commission = entity.commission;
+    storedCollator.save();
+    return;
+  }
+  storedCollator = new CollatorSet(entity.collator);
+  storedCollator.address = entity.collator;
+  storedCollator.commission = entity.commission;
+  storedCollator.assets = BigInt.zero();
+  storedCollator.inset = 1;
+  storedCollator.save();
 }
 
 export function handleInitialized(event: InitializedEvent): void {
@@ -119,19 +119,19 @@ export function handleNominationPoolCreated(
   entity.save()
 
 
-  // let storedCollator = CollatorSet.load(entity.collator);
-  // if (storedCollator) {
-  //   storedCollator.pool = entity.pool;
-  //   storedCollator.save();
-  //   return;
-  // }
+  let storedCollator = CollatorSet.load(entity.collator);
+  if (storedCollator) {
+    storedCollator.pool = entity.pool;
+    storedCollator.save();
+    return;
+  }
 
-  // storedCollator = new CollatorSet(entity.collator);
-  // storedCollator.address = entity.collator;
-  // storedCollator.pool = entity.pool;
-  // storedCollator.assets = BigInt.zero();
-  // storedCollator.inset = 1;
-  // storedCollator.save();
+  storedCollator = new CollatorSet(entity.collator);
+  storedCollator.address = entity.collator;
+  storedCollator.pool = entity.pool;
+  storedCollator.assets = BigInt.zero();
+  storedCollator.inset = 1;
+  storedCollator.save();
 }
 
 export function handleRemoveCollator(event: RemoveCollatorEvent): void {
@@ -148,14 +148,14 @@ export function handleRemoveCollator(event: RemoveCollatorEvent): void {
   entity.save()
 
 
-  // let storedCollator = CollatorSet.load(entity.cur);
-  // if (storedCollator) {
-  //   storedCollator.inset = 0;
-  //   storedCollator.votes = null;
-  //   storedCollator.prev = null;
-  //   storedCollator.save();
-  //   return;
-  // }
+  let storedCollator = CollatorSet.load(entity.cur);
+  if (storedCollator) {
+    storedCollator.inset = 0;
+    storedCollator.votes = null;
+    storedCollator.prev = null;
+    storedCollator.save();
+    return;
+  }
 }
 
 export function handleRewardDistributed(event: RewardDistributedEvent): void {
@@ -172,12 +172,12 @@ export function handleRewardDistributed(event: RewardDistributedEvent): void {
   entity.save()
 
 
-  // let storedCollator = CollatorSet.load(entity.collator);
-  // if (storedCollator) {
-  //   storedCollator.reward = entity.reward;
-  //   storedCollator.save();
-  //   return;
-  // }
+  let storedCollator = CollatorSet.load(entity.collator);
+  if (storedCollator) {
+    storedCollator.reward = entity.reward;
+    storedCollator.save();
+    return;
+  }
 }
 
 export function handleStaked(event: StakedEvent): void {
@@ -196,24 +196,28 @@ export function handleStaked(event: StakedEvent): void {
   entity.save()
 
 
-  // const _stakingAccountId = `${entity.collator}_${entity.account}`;
-  // let storedStakingAccount = StakingAccount.load(_stakingAccountId);
-  // if (!storedStakingAccount) {
-  //   storedStakingAccount = new StakingAccount(_stakingAccountId);
-  //   storedStakingAccount.pool = entity.pool;
-  //   storedStakingAccount.collator = entity.collator;
-  //   storedStakingAccount.account = entity.account;
-  //   storedStakingAccount.assets = BigInt.zero();
-  // }
-  // storedStakingAccount.assets = storedStakingAccount.assets.plus(entity.assets);
-  // storedStakingAccount.save();
+  const _stakingAccountId = `${entity.collator}_${entity.account}`;
+  let storedStakingAccount = StakingAccount.load(_stakingAccountId);
+  if (!storedStakingAccount) {
+    storedStakingAccount = new StakingAccount(_stakingAccountId);
+    storedStakingAccount.pool = entity.pool;
+    storedStakingAccount.collator = entity.collator;
+    storedStakingAccount.account = entity.account;
+    storedStakingAccount.assets = BigInt.zero();
+  }
+  storedStakingAccount.latestChangeTimestamp = event.block.timestamp;
+  storedStakingAccount.assets = storedStakingAccount.assets.plus(entity.assets);
+  storedStakingAccount.save();
 
 
-  // let storedCollator = CollatorSet.load(entity.collator);
-  // if (storedCollator) {
-  //   storedCollator.assets = (storedCollator.assets ? storedCollator.assets! : BigInt.zero()).plus(entity.assets);
-  //   storedCollator.save();
-  // }
+  let storedCollator = CollatorSet.load(entity.collator);
+  if (!storedCollator) {
+    storedCollator = new CollatorSet(entity.collator);
+    storedCollator.address = entity.collator;
+    storedCollator.assets = BigInt.zero();
+  }
+  storedCollator.assets = storedCollator.assets!.plus(entity.assets);
+  storedCollator.save();
 }
 
 export function handleUnstaked(event: UnstakedEvent): void {
@@ -232,24 +236,28 @@ export function handleUnstaked(event: UnstakedEvent): void {
   entity.save()
 
 
-  // const _stakingAccountId = `${entity.collator}_${entity.account}`;
-  // let storedStakingAccount = StakingAccount.load(_stakingAccountId);
-  // if (!storedStakingAccount) {
-  //   storedStakingAccount = new StakingAccount(_stakingAccountId);
-  //   storedStakingAccount.pool = entity.pool;
-  //   storedStakingAccount.collator = entity.collator;
-  //   storedStakingAccount.account = entity.account;
-  //   storedStakingAccount.assets = BigInt.zero();
-  // }
-  // storedStakingAccount.assets = storedStakingAccount.assets.div(entity.assets);
-  // storedStakingAccount.save();
+  const _stakingAccountId = `${entity.collator}_${entity.account}`;
+  let storedStakingAccount = StakingAccount.load(_stakingAccountId);
+  if (!storedStakingAccount) {
+    storedStakingAccount = new StakingAccount(_stakingAccountId);
+    storedStakingAccount.pool = entity.pool;
+    storedStakingAccount.collator = entity.collator;
+    storedStakingAccount.account = entity.account;
+    storedStakingAccount.assets = BigInt.zero();
+  }
+  storedStakingAccount.latestChangeTimestamp = event.block.timestamp;
+  storedStakingAccount.assets = storedStakingAccount.assets.minus(entity.assets);
+  storedStakingAccount.save();
 
 
-  // let storedCollator = CollatorSet.load(entity.collator);
-  // if (storedCollator) {
-  //   storedCollator.assets = (storedCollator.assets ? storedCollator.assets! : BigInt.zero()).div(entity.assets);
-  //   storedCollator.save();
-  // }
+  let storedCollator = CollatorSet.load(entity.collator);
+  if (!storedCollator) {
+    storedCollator = new CollatorSet(entity.collator);
+    storedCollator.address = entity.collator;
+    storedCollator.assets = BigInt.zero();
+  }
+  storedCollator.assets = storedCollator.assets!.minus(entity.assets);
+  storedCollator.save();
 }
 
 export function handleUpdateCollator(event: UpdateCollatorEvent): void {
@@ -268,14 +276,14 @@ export function handleUpdateCollator(event: UpdateCollatorEvent): void {
   entity.save()
 
 
-  // let storedCollator = CollatorSet.load(entity.cur);
-  // if (storedCollator) {
-  //   storedCollator.votes = entity.votes;
-  //   storedCollator.key = genKey(entity.cur, entity.votes);
-  //   storedCollator.prev = entity.newPrev;
-  //   storedCollator.blockNumber = event.block.number;
-  //   storedCollator.blockTimestamp = event.block.timestamp;
-  //   storedCollator.logIndex = event.logIndex;
-  //   storedCollator.save();
-  // }
+  let storedCollator = CollatorSet.load(entity.cur);
+  if (storedCollator) {
+    storedCollator.votes = entity.votes;
+    storedCollator.key = genKey(entity.cur, entity.votes);
+    storedCollator.prev = entity.newPrev;
+    storedCollator.blockNumber = event.block.number;
+    storedCollator.blockTimestamp = event.block.timestamp;
+    storedCollator.logIndex = event.logIndex;
+    storedCollator.save();
+  }
 }
