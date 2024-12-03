@@ -1,0 +1,24 @@
+{
+  "name": "dip7index",
+  "license": "UNLICENSED",
+  "scripts": {
+    "codegen": "graph codegen",
+    "build": "graph build",
+    "deploy:studio": "graph deploy --node https://api.studio.thegraph.com/deploy/",
+    "create:darwinia": "graph create --node https://thegraph.darwinia.network/dip7/deploy/",
+    "remove:darwinia": "graph remove --node https://thegraph.darwinia.network/dip7/deploy/",
+    "deploy:darwinia": "graph deploy --node https://thegraph.darwinia.network/dip7/deploy/ --ipfs https://ipfs.network.thegraph.com",
+    "create:training": "graph create --node https://thegraph-g2.darwinia.network/training/deploy/",
+    "remove:training": "graph remove --node https://thegraph-g2.darwinia.network/training/deploy/",
+    "deploy:training": "graph deploy --node https://thegraph-g2.darwinia.network/training/deploy/ --ipfs https://ipfs.network.thegraph.com",
+    "create:local": "graph create --node http://127.0.0.1:8020",
+    "remove:local": "graph remove --node http://127.0.0.1:8020",
+    "deploy:local": "graph deploy --node http://127.0.0.1:8020 --ipfs https://ipfs.network.thegraph.com",
+    "test": "graph test"
+  },
+  "dependencies": {
+    "@graphprotocol/graph-cli": "0.81.0",
+    "@graphprotocol/graph-ts": "0.32.0"
+  },
+  "devDependencies": { "matchstick-as": "0.5.0" }
+}

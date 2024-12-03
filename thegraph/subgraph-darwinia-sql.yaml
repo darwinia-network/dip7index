@@ -1,0 +1,50 @@
+specVersion: 1.0.0
+indexerHints:
+  prune: auto
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: CollatorStakingHub
+    network: darwinia-sql
+    source:
+      address: "0xa4fFAC7A5Da311D724eD47393848f694Baee7930"
+      abi: CollatorStakingHub
+      startBlock: 3675271
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - AddCollator
+        - CommissionUpdated
+        - Initialized
+        - NominationPoolCreated
+        - RemoveCollator
+        - RewardDistributed
+        - Staked
+        - Unstaked
+        - UpdateCollator
+      abis:
+        - name: CollatorStakingHub
+          file: ./abis/CollatorStakingHub.json
+      eventHandlers:
+        - event: AddCollator(indexed address,uint256,address)
+          handler: handleAddCollator
+        - event: CommissionUpdated(indexed address,uint256)
+          handler: handleCommissionUpdated
+        - event: Initialized(uint64)
+          handler: handleInitialized
+        - event: NominationPoolCreated(indexed address,address)
+          handler: handleNominationPoolCreated
+        - event: RemoveCollator(indexed address,address)
+          handler: handleRemoveCollator
+        - event: RewardDistributed(indexed address,uint256)
+          handler: handleRewardDistributed
+        - event: Staked(indexed address,address,address,uint256)
+          handler: handleStaked
+        - event: Unstaked(indexed address,address,address,uint256)
+          handler: handleUnstaked
+        - event: UpdateCollator(indexed address,uint256,address,address)
+          handler: handleUpdateCollator
+      file: ./src/collator-staking-hub.ts
