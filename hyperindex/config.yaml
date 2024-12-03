@@ -31,7 +31,7 @@ networks:
   - id: 701
     confirmed_block_threshold: 8
     rpc_config:
-      url: https://koi-rpc.darwinia.network
+      url: http://g1.testnets.darwinia.network:9942
     start_block: 1075463
     contracts:
       - name: CollatorStakingHub
